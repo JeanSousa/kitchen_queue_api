@@ -1,8 +1,6 @@
-from flask import Flask
+from server.instance import server
 
-app = Flask(__name__)
+api = server.get_app()
 
-@app.get("/hello")
-def hello_world():
-    return "hello world"
-
+if __name__ == '__main__':
+    api.run(debug=True)
