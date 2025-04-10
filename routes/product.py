@@ -1,13 +1,25 @@
-from . import blueprint 
+from pydantic import BaseModel
+from server import product_tag
+from . import api_blueprint 
 
-@blueprint.route('products/<int:product_id>', methods=['GET'])
+class ProductResponse(BaseModel):
+    id: int
+    name: str
+
+
+
+@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductResponse})
 def get(product_id):
-    return f"id do produto {product_id}"
+    """Adiciona um novo Produto à base de dados
 
-@blueprint.route('products', methods=['GET'])
-def get_all():
-    return { 'product': []}, 200
+    Retorna uma representação dos produtos e comentários associados.
+    """
+    return {"id": product_id, "name": "coca cola"}, 200
 
-@blueprint.route('products', methods=['POST'])
-def create():
-    return { 'product': []}, 201
+# @api_blueprint.get('/products')
+# def get_all():
+#     return { 'product': []}, 200
+
+# @api_blueprint.post('/products')
+# def create():
+#     return { 'product': []}, 201

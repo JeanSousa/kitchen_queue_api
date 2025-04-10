@@ -1,0 +1,1 @@
+from .tags import product_tag 

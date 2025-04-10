@@ -1,7 +1,7 @@
 from flask import redirect
 
-from . import blueprint 
+from . import api_blueprint 
 
-@blueprint.route('/', methods=['GET'])
+@api_blueprint.get('/')
 def home():
     return redirect('/openapi')
