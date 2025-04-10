@@ -26,7 +26,7 @@ class ProductPathSchema(BaseModel):
 class ProductsListViewSchema(BaseModel):
     """ Defines how a product listing will be returned.
     """
-    produtos: List[ProductViewSchema]
+    products: List[ProductViewSchema]
 
 
 def products_presentation(products: List[Product]):
