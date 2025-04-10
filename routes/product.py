@@ -1,12 +1,14 @@
 from sqlalchemy.exc import IntegrityError
 
 from schemas.product import *
+from schemas.error import ErrorSchema
 from . import api_blueprint 
 from models import Session, Product
 from server import product_tag
 
 
-@api_blueprint.post('/products', tags=[product_tag], responses={"201": ProductViewSchema})
+@api_blueprint.post('/products', tags=[product_tag], 
+    responses={"201": ProductViewSchema, "409": ErrorSchema, "400": ErrorSchema})
 def add(form: ProductSchema):
     """Adiciona um novo Produto à base de dados
 
