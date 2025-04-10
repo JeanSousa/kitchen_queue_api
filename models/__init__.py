@@ -24,8 +24,8 @@ engine = create_engine(db_url, echo=True)
 Session = sessionmaker(bind=engine)
 
 # Create database if not exists
-# if not database_exists(engine.url):
-#     create_database(engine.url)
+if not database_exists(engine.url):
+    create_database(engine.url)
 
 # Create database tables if not exists
 
