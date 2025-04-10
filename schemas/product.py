@@ -4,13 +4,13 @@ from typing import List
 from models import Product
 
 class ProductSchema(BaseModel):
-    """ Define como um novo produto a ser inserido deve ser representado
+    """ Defines how a new product to be inserted should be represented
     """
     name: str = "Nome do produto"
     value: float = 0
 
 class ProductViewSchema(BaseModel):
-    """ Define como um novo produto a ser retornado deve ser representado
+    """ Defines how a new product to be returned should be represented
     """
     id: int
     name: str 
@@ -19,16 +19,18 @@ class ProductViewSchema(BaseModel):
     updated_at: str 
     deleted_at: str
 
-class ProdutoPathSchema(BaseModel):
+class ProductPathSchema(BaseModel):
     product_id: int = Field(..., description="ID do produto na URL")
 
 
-# class ProductListSchema(BaseModel):
-#     products:List[Product]
+class ProductsListViewSchema(BaseModel):
+    """ Defines how a product listing will be returned.
+    """
+    produtos: List[ProductViewSchema]
 
 
 def products_presentation(products: List[Product]):
-    """ Retorna an product presentation defined by
+    """ Return an product presentation defined by
         ProductViewSchema.
     """
     result = []
@@ -45,6 +47,9 @@ def products_presentation(products: List[Product]):
     return {"products": result}
 
 def product_presentation(product: Product):
+    """ Return an product list presentation defined by
+        ProductViewSchema.
+    """
     return {
         "id": product.id,
         "nome": product.name,
