@@ -1,7 +1,7 @@
 # as_declarative transform BaseModel in declarative base from sqlalchemy, 
 # declarative_attr allow define atributes like __tablename__
 from sqlalchemy.ext.declarative import declared_attr, as_declarative
-from sqlalchemy import Column, DateTime
+from sqlalchemy.inspection import inspect
 from datetime import datetime
 
 
@@ -31,4 +31,3 @@ class BaseModel:
         if hasattr(cls, "deleted_at"):
             return session.query(cls).filter(cls.deleted_at == None).all()
         return session.query(cls).all()
-    

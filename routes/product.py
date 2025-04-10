@@ -1,12 +1,12 @@
 from sqlalchemy.exc import IntegrityError
 
-from schemas import ProductSchema, ProductSchemaResponse, ProdutoPathSchema
+from schemas.product import *
 from . import api_blueprint 
 from models import Session, Product
 from server import product_tag
 
 
-@api_blueprint.post('/products', tags=[product_tag], responses={"201": ProductSchemaResponse})
+@api_blueprint.post('/products', tags=[product_tag], responses={"201": ProductViewSchema})
 def add(form: ProductSchema):
     """Adiciona um novo Produto à base de dados
 
@@ -18,8 +18,7 @@ def add(form: ProductSchema):
         session = Session()
         session.add(product)
         session.commit()
-
-        return { "name": "Coca cola", "value": 2.65}, 201
+        return product_presentation(product)
     except IntegrityError as e:
         # case product already exists
         errorMessage = "Produto já existe na base de dados"
@@ -28,8 +27,12 @@ def add(form: ProductSchema):
         # unknow error
         errorMessage = "Não foi possivel salvar o item, por favor tente novamente mais tarde"
         return { "message": errorMessage}, 400 
+    
+@api_blueprint.get('/products', tags=[product_tag], responses={"200": ProductViewSchema})
+def get_all():
+    return { 'product': []}, 200
 
-@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductSchemaResponse})
+@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductViewSchema})
 def get(path: ProdutoPathSchema):
     """Adiciona um novo Produto à base de dados
 
@@ -37,9 +40,6 @@ def get(path: ProdutoPathSchema):
     """
     return {"id": path.product_id, "name": "coca cola"}, 200
 
-# @api_blueprint.get('/products')
-# def get_all():
-#     return { 'product': []}, 200
 
 # @api_blueprint.post('/products')
 # def create():

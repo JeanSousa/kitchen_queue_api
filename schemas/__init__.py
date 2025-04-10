@@ -1,1 +1,1 @@
-from .product import ProductSchema, ProductSchemaResponse, ProdutoPathSchema
+from .product import ProductSchema, ProductViewSchema, ProdutoPathSchema
