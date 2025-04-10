@@ -21,7 +21,7 @@ class BaseModel:
     """
     id: int 
 
-    """define default value to tablename"""
+    #define default value to tablename
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower()
@@ -35,5 +35,5 @@ class BaseModel:
 
     @classmethod
     def get_all_active(cls, session):
-        """Return only actives"""
         return session.query(cls).filter(cls.deleted_at == None).all()
+    

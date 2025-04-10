@@ -9,5 +9,3 @@ class Product(BaseModel):
     id = Column("pk_product", Integer, primary_key=True)
     name = Column(String(200), unique=True)
     value = Column(Float)
-    created_at = Column(DateTime, default=datetime.now())
-    updated_at = Column(DateTime, default=datetime.now())

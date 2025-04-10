@@ -18,3 +18,6 @@ venv/
 
 # Outros
 .DS_Store
+
+# Database
+database

@@ -1,6 +1,8 @@
 from flask_openapi3 import OpenAPI, Info
 
 from routes import api_blueprint
+# import BaseModel to create tables
+from models import BaseModel
 
 class Server():
     def __init__(self):
