@@ -32,7 +32,8 @@ def add(form: ProductSchema):
         error_message = "Não foi possivel salvar o item, por favor tente novamente mais tarde"
         return { "message": error_message}, 400 
     
-@api_blueprint.get('/products', tags=[product_tag], responses={"200": ProductsListViewSchema, "400": ErrorSchema})
+@api_blueprint.get('/products', tags=[product_tag], 
+    responses={"200": ProductsListViewSchema, "400": ErrorSchema})
 def get_all():
     """Busca todos os produtos da base de dados
 
@@ -52,13 +53,25 @@ def get_all():
         return { "message": error_message}, 400
 
 
-# @api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductViewSchema})
-# def get(path: ProductPathSchema):
-#     """Adiciona um novo Produto à base de dados
+@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], 
+    responses={"200": ProductViewSchema, "404": ErrorSchema, "400": ErrorSchema})
+def get_by_id(path: ProductPathSchema):
+    """Busca um produto na base de dados
 
-#     Retorna uma representação dos produtos e comentários associados.
-#     """
-#     return {"id": path.product_id, "name": "coca cola"}, 200
+    Retorna uma representação de um produto.
+    """
+    try:
+        session = Session()
+        product = Product.get_by_id(session, path.product_id)
+
+        if not product:
+            error_message = "Produto não encontrado na base de dados"
+            return { "message": error_message }, 404
+
+        return product_presentation(product), 200
+    except Exception as e: 
+        error_message = "Não foi possível buscar o item, por favor tente novamente mais tarde"
+        return { "message": error_message}, 400
 
 
 # @api_blueprint.post('/products')

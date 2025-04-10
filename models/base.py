@@ -31,3 +31,9 @@ class BaseModel:
         if hasattr(cls, "deleted_at"):
             return session.query(cls).filter(cls.deleted_at == None).all()
         return session.query(cls).all()
+    
+    @classmethod
+    def get_by_id(cls, session, id: int):
+        if hasattr(cls, "deleted_at"):
+            return session.query(cls).filter(cls.deleted_at == None, cls.id == id).first()
+        return session.query(cls).filter(cls.id == id).first()
