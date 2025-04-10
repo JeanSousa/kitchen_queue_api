@@ -1,18 +1,19 @@
 from pydantic import BaseModel, Field
+
 from server import product_tag
+from schemas import ProductSchema, ProductSchemaResponse, ProdutoPathSchema
 from . import api_blueprint 
 
-# PASSAR ESSA PARTE PARA OS SCHEMAS, TERMINAR O FLUXO DE UM POST ATE O BANCO DE DADOS
-class ProductResponse(BaseModel):
-    id: int
-    name: str
 
-class ProdutoPathSchema(BaseModel):
-    product_id: int = Field(..., description="ID do produto na URL")
+@api_blueprint.post('/produtos', tags=[product_tag], responses={"201": ProductSchemaResponse})
+def add(form: ProductSchema):
+    """Adiciona um novo Produto à base de dados
 
+    Retorna uma representação de um produto.
+    """
+    return { "name": "Coca cola", "value": 2.65}, 201
 
-
-@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductResponse})
+@api_blueprint.get('/products/<int:product_id>', tags=[product_tag], responses={"200": ProductSchemaResponse})
 def get(path: ProdutoPathSchema):
     """Adiciona um novo Produto à base de dados
 
