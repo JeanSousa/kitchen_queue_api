@@ -103,7 +103,7 @@ def update_order_product_by_id(path: OrderProductPathSchema, form: OrderProductS
 def delete_order_product_by_id(path: OrderProductPathSchema):
     """Deleta o vinculo de um produto ao pedido na base de dados
 
-    Retorno sem conteudo.
+    Retorna o id de um vinculo.
     """
     try:
         session = Session()
@@ -119,3 +119,21 @@ def delete_order_product_by_id(path: OrderProductPathSchema):
     except Exception as e:
         error_message = "Não foi possível deletar o pedido, por favor tente novamente mais tarde"
         return { "message": error_message}, 400
+    
+
+@api_blueprint.get('/order-products/products/<int:order_id>', tags=[order_products_tag])
+def get_products_by_order_id(path: OrderProductPathOrderIdSchema):
+    """Busca os produtos de um pedido
+
+    Retorno sem conteudo.
+    """
+    # PAREI AQUI IMPLEMENTANDO A BUSCA DE PRODUTOS PELO ID DO PEDIDO
+    session = Session()
+    order_products = session.query(OrderProduct).filter_by(order_id=path.order_id,deleted_at=None).all() 
+
+    # ISSO TO USANDO PRA PRINTAR POQUE A CLASSE NÃO POSSUI UM METODO __repr__ OU __str__ NA MODEL
+    # VERIFICAR POQUE QUANDO USO O METODO DE PRESENTATION DA CERTO
+    for op in order_products:
+        print(op.__dict__)
+
+    return {}

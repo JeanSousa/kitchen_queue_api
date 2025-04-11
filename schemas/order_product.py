@@ -15,6 +15,10 @@ class OrderProductPathSchema(BaseModel):
     order_product_id: int = Field(..., description="ID do vinculo do produto ao pedido da Url")
 
 
+class OrderProductPathOrderIdSchema(BaseModel):
+    order_id: int = Field(..., description="ID do pedido")
+
+
 class OrderProductViewSchema(BaseModel):
     """ Defines how a new order_product to be returned should be represented
     """
