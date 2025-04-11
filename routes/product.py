@@ -9,7 +9,7 @@ from server import product_tag
 
 @api_blueprint.post('/products', tags=[product_tag], 
     responses={"201": ProductViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def add(form: ProductSchema):
+def add_product(form: ProductSchema):
     """Adiciona um novo Produto à base de dados
 
     Retorna uma representação de um produto.
@@ -35,7 +35,7 @@ def add(form: ProductSchema):
 
 @api_blueprint.get('/products', tags=[product_tag], 
     responses={"200": ProductsListViewSchema, "400": ErrorSchema})
-def get_all():
+def get_all_products():
     """Busca todos os produtos da base de dados
 
     Retorna uma representação dos produtos.
@@ -56,7 +56,7 @@ def get_all():
 
 @api_blueprint.get('/products/<int:product_id>', tags=[product_tag], 
     responses={"200": ProductViewSchema, "404": ErrorSchema, "400": ErrorSchema})
-def get_by_id(path: ProductPathSchema):
+def get_product_by_id(path: ProductPathSchema):
     """Busca um produto na base de dados
 
     Retorna uma representação de um produto.
@@ -77,7 +77,7 @@ def get_by_id(path: ProductPathSchema):
 
 @api_blueprint.put('/products/<int:product_id>', tags=[product_tag],
     responses={"200": ProductViewSchema, "401": ErrorSchema, "400": ErrorSchema})
-def update_by_id(path: ProductPathSchema, form: ProductSchema):
+def update_product_by_id(path: ProductPathSchema, form: ProductSchema):
     """Atualiza um produto na base de dados
 
     Retorna uma representação de um produto.
@@ -102,7 +102,7 @@ def update_by_id(path: ProductPathSchema, form: ProductSchema):
 
 @api_blueprint.delete('/products/<int:product_id>', tags=[product_tag],
     responses={"200": ProductDelSchema, "401": ErrorSchema, "400": ErrorSchema})
-def delete_by_id(path: ProductPathSchema):
+def delete_product_by_id(path: ProductPathSchema):
     """Deleta um produto na base de dados
 
     Retorna o nome do produto deletado.
