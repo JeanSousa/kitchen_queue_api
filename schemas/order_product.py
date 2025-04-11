@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 
 from models import OrderProduct
@@ -11,6 +11,9 @@ class OrderProductSchema(BaseModel):
     amount: int = 1
 
 
+class OrderProductPathSchema(BaseModel):
+    order_product_id: int = Field(..., description="ID do pedido da Url")
+
 
 class OrderProductViewSchema(BaseModel):
     """ Defines how a new order_product to be returned should be represented
@@ -20,10 +23,12 @@ class OrderProductViewSchema(BaseModel):
     product_id: int = 1
     amount: int = 1
 
+
 class OrderProductListViewSchema(BaseModel):
     """ Defines how a order products listing will be returned.
     """
     order_products: List[OrderProductViewSchema]
+
 
 def order_products_presentation(order_products: List[OrderProduct]):
     """ Return an order product presentation defined by
