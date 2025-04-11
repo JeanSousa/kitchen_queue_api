@@ -20,7 +20,7 @@ def add_product(form: ProductSchema):
         session = Session()
         session.add(product)
         session.commit()
-        return product_presentation(product)
+        return product_presentation(product), 201
     
     except IntegrityError as e:
         # case product already exists

@@ -5,7 +5,7 @@ from models import Session, Order
 from server import order_tag
 
 @api_blueprint.post('/orders', tags=[order_tag],
-    responses={"200": OrderViewSchema, "400": ErrorSchema})
+    responses={"201": OrderViewSchema, "400": ErrorSchema})
 def add_order(form: OrderSchema):
     """Adiciona um novo pedido à base de dados
 
@@ -21,7 +21,7 @@ def add_order(form: OrderSchema):
         session = Session()
         session.add(order)
         session.commit()
-        return order_presentation(order), 200
+        return order_presentation(order), 201
     except Exception as e:
         # unknow error
         error_message = "Não foi possivel salvar o pedido, por favor tente novamente mais tarde"
