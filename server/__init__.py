@@ -1,1 +1,1 @@
-from .tags import product_tag, order_tag, orders_products_tag
+from .tags import product_tag, order_tag, order_products_tag

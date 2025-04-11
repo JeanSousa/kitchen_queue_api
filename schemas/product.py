@@ -58,8 +58,8 @@ def product_presentation(product: Product):
     """
     return {
         "id": product.id,
-        "nome": product.name,
-        "valor": product.value,
+        "name": product.name,
+        "value": product.value,
         "created_at": product.created_at,
         "updated_at": product.updated_at,
         "deleted_at": product.deleted_at
