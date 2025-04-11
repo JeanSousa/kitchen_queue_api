@@ -93,11 +93,11 @@ def update_product_by_id(path: ProductPathSchema, form: ProductSchema):
         product.name = form.name 
         product.value = form.value 
         session.commit()
+        return product_presentation(product), 200
     except Exception as e:
         error_message = "Não foi possível atualizar o item, por favor tente novamente mais tarde"
         return { "message": error_message}, 400
     
-    return product_presentation(product), 200
 
 
 @api_blueprint.delete('/products/<int:product_id>', tags=[product_tag],
