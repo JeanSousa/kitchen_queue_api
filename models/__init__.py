@@ -7,6 +7,7 @@ import os
 # import model elements
 from .base import BaseModel
 from .product import Product
+from .order import Order
 
 db_path = ('database')
 

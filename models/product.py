@@ -1,12 +1,13 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Float, DateTime
+
 from models.base import BaseModel
 
 class Product(BaseModel):
-    __tablename__ = 'product'
+    __tablename__ = 'products'
 
     """Table definition."""
-    id = Column("pk_product", Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String(200), unique=True)
     value = Column(Float)
     created_at = Column(DateTime, default=datetime.now)
@@ -15,11 +16,11 @@ class Product(BaseModel):
 
     def __init__(self, name, value):
         """
-        Cria um Produto
+        Create a product
 
         Arguments:
-            name: nome do produto.
-            value: valor esperado para o produto
+            name: product name.
+            value: expected value for the product.
         """
         self.name = name 
         self.value = value 
