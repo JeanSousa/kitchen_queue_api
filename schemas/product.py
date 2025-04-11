@@ -28,6 +28,12 @@ class ProductsListViewSchema(BaseModel):
     """
     products: List[ProductViewSchema]
 
+class ProductDelSchema(BaseModel):
+    """ Defines how a product deleted will be returned.
+    """
+    message: str 
+    name: str
+
 
 def products_presentation(products: List[Product]):
     """ Return an product presentation defined by

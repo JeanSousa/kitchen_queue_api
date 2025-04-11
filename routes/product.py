@@ -32,6 +32,7 @@ def add(form: ProductSchema):
         error_message = "Não foi possivel salvar o item, por favor tente novamente mais tarde"
         return { "message": error_message}, 400 
     
+
 @api_blueprint.get('/products', tags=[product_tag], 
     responses={"200": ProductsListViewSchema, "400": ErrorSchema})
 def get_all():
@@ -72,8 +73,53 @@ def get_by_id(path: ProductPathSchema):
     except Exception as e: 
         error_message = "Não foi possível buscar o item, por favor tente novamente mais tarde"
         return { "message": error_message}, 400
+    
+
+@api_blueprint.put('/products/<int:product_id>', tags=[product_tag],
+    responses={"200": ProductViewSchema, "401": ErrorSchema, "400": ErrorSchema})
+def update_by_id(path: ProductPathSchema, form: ProductSchema):
+    """Atualiza um produto na base de dados
+
+    Retorna uma representação de um produto.
+    """
+    try:
+        session = Session()
+        product = Product.get_by_id(session, path.product_id)
+
+        if not product:
+            error_message = "Produto não encontrado na base de dados"
+            return { "message": error_message }, 404
+        
+        product.name = form.name 
+        product.value = form.value 
+        session.commit()
+    except Exception as e:
+        error_message = "Não foi possível atualizar o item, por favor tente novamente mais tarde"
+        return { "message": error_message}, 400
+    
+    return product_presentation(product), 200
 
 
-# @api_blueprint.post('/products')
-# def create():
-#     return { 'product': []}, 201
+@api_blueprint.delete('/products/<int:product_id>', tags=[product_tag],
+    responses={"200": ProductDelSchema, "401": ErrorSchema, "400": ErrorSchema})
+def delete_by_id(path: ProductPathSchema):
+    """Deleta um produto na base de dados
+
+    Retorna o nome do produto deletado.
+    """
+    try:
+        session = Session()
+        product = Product.get_by_id(session, path.product_id)
+
+        if not product:
+            error_message = "Produto não encontrado na base de dados"
+            return { "message": error_message }, 404
+
+        product.soft_delete()
+        session.commit()
+        return { "message" : "Produto deletado com sucesso", "name": product.name }, 200  
+    except Exception as e:
+        error_message = "Não foi possível deletar o item, por favor tente novamente mais tarde"
+        return { "message": error_message}, 400
+        
+

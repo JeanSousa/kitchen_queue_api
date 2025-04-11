@@ -18,7 +18,7 @@ if not os.path.exists(db_path):
 db_url = f"sqlite:///{db_path}/db.sqlite"
 
 # Create database connection engine with disable query logs
-engine = create_engine(db_url, echo=True)
+engine = create_engine(db_url, echo=True, connect_args={"check_same_thread": False})
 
 # Instantiate a section creator with the database
 Session = sessionmaker(bind=engine)
