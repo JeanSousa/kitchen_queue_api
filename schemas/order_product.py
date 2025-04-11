@@ -12,7 +12,7 @@ class OrderProductSchema(BaseModel):
 
 
 class OrderProductPathSchema(BaseModel):
-    order_product_id: int = Field(..., description="ID do pedido da Url")
+    order_product_id: int = Field(..., description="ID do vinculo do produto ao pedido da Url")
 
 
 class OrderProductViewSchema(BaseModel):

@@ -95,7 +95,7 @@ def update_order_by_id(path: OrderPathSchema, form: OrderSchema):
     
 
 @api_blueprint.delete('/orders/<int:order_id>', tags=[order_tag],
-    responses={"200": OrderDelSchema, "401": ErrorSchema, "400": ErrorSchema})
+    responses={"200": OrderDelSchema, "404": ErrorSchema, "400": ErrorSchema})
 def delete_order_by_id(path: OrderPathSchema):
     """Deleta um pedido na base de dados
 
@@ -113,6 +113,5 @@ def delete_order_by_id(path: OrderPathSchema):
         session.commit()
         return { "message" : "Pedido deletado com sucesso", "table_number": order.table_number }, 200  
     except Exception as e:
-        print(e)
         error_message = "Não foi possível deletar o pedido, por favor tente novamente mais tarde"
         return { "message": error_message}, 400

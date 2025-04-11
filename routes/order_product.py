@@ -72,3 +72,50 @@ def get_order_product_by_id(path: OrderProductPathSchema):
         return { "message": error_message}, 400
     
 
+@api_blueprint.put('/order-products/<int:order_product_id>', tags=[order_products_tag],
+    responses={"200": OrderProductViewSchema, "404": ErrorSchema, "400": ErrorSchema})
+def update_order_product_by_id(path: OrderProductPathSchema, form: OrderProductSchema):
+    """Atualiza o vinculo de um produto ao pedido na base de dados
+
+    Retorna uma representação de um vinculo de um produto ao pedido.
+    """
+    try:
+        session = Session()
+        order_product = OrderProduct.get_by_id(session, path.order_product_id)
+
+        if not order_product:
+            error_message = "Vinculo não encontrado na base de dados"
+            return { "message": error_message }, 404
+        
+        order_product.order_id = form.order_id 
+        order_product.product_id = form.product_id 
+        order_product.amount = form.amount
+
+        session.commit()
+        return order_product_presentation(order_product), 200
+    except Exception as e:
+        error_message = "Não foi possível atualizar o vinculo, por favor tente novamente mais tarde"
+        return { "message": error_message}, 400
+    
+
+@api_blueprint.delete('/orders-products/<int:order_product_id>', tags=[order_products_tag],
+    responses={"200": {}, "404": ErrorSchema, "400": ErrorSchema})
+def delete_order_product_by_id(path: OrderProductPathSchema):
+    """Deleta o vinculo de um produto ao pedido na base de dados
+
+    Retorno sem conteudo.
+    """
+    try:
+        session = Session()
+        order_product = OrderProduct.get_by_id(session, path.order_product_id)
+
+        if not order_product:
+            error_message = "Vinculo não encontrado na base de dados"
+            return { "message": error_message }, 404
+
+        order_product.soft_delete()
+        session.commit()
+        return { "message" : "Vinculo deletado com sucesso", "order_product_id": order_product.id }, 200  
+    except Exception as e:
+        error_message = "Não foi possível deletar o pedido, por favor tente novamente mais tarde"
+        return { "message": error_message}, 400
