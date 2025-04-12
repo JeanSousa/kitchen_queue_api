@@ -1,4 +1,4 @@
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy import and_
 
 from schemas.product import *
 from schemas.error import ErrorSchema
@@ -14,18 +14,26 @@ def add_product(form: ProductSchema):
 
     Retorna uma representação de um produto.
     """
-    product = Product(name=form.name, value=form.value)
     
     try:
         session = Session()
+
+        product = session.query(Product).filter(
+                and_(
+                    Product.name == form.name,
+                    Product.deleted_at == None
+                )
+            ).first()
+        
+        # case already exists
+        if product:
+            error_message = "Produto já existe na base de dados"
+            return { "message": error_message }, 409
+
+        product = Product(name=form.name, value=form.value)
         session.add(product)
         session.commit()
         return product_presentation(product), 201
-    
-    except IntegrityError as e:
-        # case product already exists
-        error_message = "Produto já existe na base de dados"
-        return { "message": error_message }, 409
     
     except Exception as e:
         # unknow error
