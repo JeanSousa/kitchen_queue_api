@@ -45,12 +45,15 @@ Ou com o seguinte comando CLI do flask escolhendo o host e porta :
 flask run --host=0.0.0.0 --port=5000 
 ```
 
-Ao final abra a url http://127.0.0.1:5000/api no navegador, vamos ter a pagina de seleção
-da documentação da API:
+Ao final abra a url http://127.0.0.1:5000/api no navegador, e iremos ser redirecionados para 
+a pagina de seleção da documentação da API:
 
+![Pagina de seleção da documentação da API](assets/images/select_documentation.png)
 
+Ao selecionar swagger teremos essa pagina de documentação, onde poderemos testar os endpoints da API :
 
-Exemplo de seleção do Swagger :
+![Documentação Swagger da API](assets/images/swagger_documentation.png)
+
 
 ## 🛠️ Construído com
 
