@@ -1,6 +1,6 @@
 # Kitchen Queue API
 
-Este projeto é uma API da aplicação mínima viável (MVP) de um sistema de 
+Este projeto é uma API do produto mínimo viável (MVP) de um sistema de 
 gerenciamento de filas de pedidos voltado para restaurantes.
 O objetivo deste sistema é realizar a gestão da fila de pedidos de um restaurante. Os colaboradores
 responsáveis pelo atendimento serão responsáveis por inserir as informações dos pedidos,
