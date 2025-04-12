@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 Para executar o projeto deve-se rodar o preferencialmente o seguinte comando 
 executando diretamente o arquivo python, para que o projeto seja startado no 
-endereço local http://127.0.0.1:5000/api :
+endereço local http://127.0.0.1:5000 :
 
 ```
 python app.py
@@ -45,7 +45,7 @@ Ou com o seguinte comando CLI do flask escolhendo o host e porta :
 flask run --host=0.0.0.0 --port=5000 
 ```
 
-Ao final abra a url http://127.0.0.1:5000/api no navegador, e iremos ser redirecionados para 
+Ao final abra a url http://127.0.0.1:5000 no navegador, e iremos ser redirecionados para 
 a pagina de seleção da documentação da API:
 
 ![Pagina de seleção da documentação da API](assets/images/select_documentation.png)
