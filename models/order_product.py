@@ -1,5 +1,6 @@
 from datetime import datetime 
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 
 from models.base import BaseModel
 
@@ -14,6 +15,9 @@ class OrderProduct(BaseModel):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     deleted_at = Column(DateTime, nullable=True)
+
+    product = relationship("Product")
+    order = relationship("Order")
 
     def __init__(self, order_id, product_id, amount):
         """

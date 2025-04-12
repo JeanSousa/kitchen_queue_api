@@ -22,10 +22,13 @@ class OrderProductPathOrderIdSchema(BaseModel):
 class OrderProductViewSchema(BaseModel):
     """ Defines how a new order_product to be returned should be represented
     """
-    id: int = 1
-    order_id: int = 1
-    product_id: int = 1
-    amount: int = 1
+    id: int 
+    order_id: int 
+    product_id: int 
+    amount: int 
+    created_at: str
+    updated_at: str 
+    deleted_at: str
 
 
 class OrderProductListViewSchema(BaseModel):
@@ -54,7 +57,7 @@ def order_products_presentation(order_products: List[OrderProduct]):
 
 
 def order_product_presentation(order_product: OrderProduct):
-    """ Return an order_product presentation defined by
+    """ Return an order_products presentation defined by
         OrderProductViewSchema.
     """
     return {
@@ -65,4 +68,25 @@ def order_product_presentation(order_product: OrderProduct):
         "created_at": order_product.created_at,
         "updated_at": order_product.updated_at,
         "deleted_at": order_product.deleted_at
+    }
+
+    
+def order_product_by_order_presentation(order_products: list[OrderProduct]):
+    return {
+        "order_id": order_products[0].order.id,
+        "table_number": order_products[0].order.table_number,
+        "observation": order_products[0].order.observation,
+        "status": order_products[0].order.status,
+        "status": order_products[0].order.created_at,
+        "status": order_products[0].order.updated_at,
+        "status": order_products[0].order.deleted_at,
+        "products": [
+            {
+                "product_id": op.product.id,
+                "name": op.product.name,
+                "value": op.product.value,
+                "amount": op.amount
+            }
+            for op in order_products
+        ]
     }

@@ -127,13 +127,15 @@ def get_products_by_order_id(path: OrderProductPathOrderIdSchema):
 
     Retorno sem conteudo.
     """
-    # PAREI AQUI IMPLEMENTANDO A BUSCA DE PRODUTOS PELO ID DO PEDIDO
     session = Session()
-    order_products = session.query(OrderProduct).filter_by(order_id=path.order_id,deleted_at=None).all() 
+
+    order_products = session.query(OrderProduct)\
+        .filter(
+            OrderProduct.order_id == path.order_id,
+            OrderProduct.deleted_at.is_(None)
+        ).all()
 
     # ISSO TO USANDO PRA PRINTAR POQUE A CLASSE NÃO POSSUI UM METODO __repr__ OU __str__ NA MODEL
     # VERIFICAR POQUE QUANDO USO O METODO DE PRESENTATION DA CERTO
-    for op in order_products:
-        print(op.__dict__)
 
-    return {}
+    return order_product_by_order_presentation(order_products), 200
