@@ -1,5 +1,7 @@
 from flask_openapi3 import OpenAPI, Info
 from flask import redirect
+from flask_cors import CORS
+
 
 from routes import api_blueprint
 # import BaseModel to create tables
@@ -9,6 +11,9 @@ class Server():
     def __init__(self):
         info = Info(title="Minha API", version="1.0.0")
         self.__app = OpenAPI(__name__, info=info)
+
+        # allow CORS
+        CORS(self.__app)
 
         # Home route
         @self.__app.get("/")
