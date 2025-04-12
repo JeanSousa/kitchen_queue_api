@@ -37,6 +37,26 @@ class OrderProductListViewSchema(BaseModel):
     order_products: List[OrderProductViewSchema]
 
 
+class ProductInOrderSchema(BaseModel):
+    """ Product within an order with quantity
+    """
+    product_id: int
+    name: str
+    value: float
+    amount: int
+
+class OrderWithProductsViewSchema(BaseModel):
+    """ Define an order with your products
+    """
+    order_id: int
+    table_number: int
+    observation: str
+    status: str
+    created_at: str 
+    updated_at: str 
+    deleted_at: str
+    products: List[ProductInOrderSchema]
+
 def order_products_presentation(order_products: List[OrderProduct]):
     """ Return an order product presentation defined by
         OrderProductViewSchema.

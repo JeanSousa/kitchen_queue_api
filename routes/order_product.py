@@ -115,27 +115,38 @@ def delete_order_product_by_id(path: OrderProductPathSchema):
 
         order_product.soft_delete()
         session.commit()
-        return { "message" : "Vinculo deletado com sucesso", "order_product_id": order_product.id }, 200  
+        return { 
+            "message" : "Vinculo deletado com sucesso", "order_product_id": order_product.id
+        }, 200  
     except Exception as e:
         error_message = "Não foi possível deletar o pedido, por favor tente novamente mais tarde"
         return { "message": error_message}, 400
     
 
-@api_blueprint.get('/order-products/products/<int:order_id>', tags=[order_products_tag])
+@api_blueprint.get('/order-products/products/<int:order_id>', tags=[order_products_tag],
+    responses={"200": OrderWithProductsViewSchema, "404": ErrorSchema, "400": ErrorSchema})
 def get_products_by_order_id(path: OrderProductPathOrderIdSchema):
-    """Busca os produtos de um pedido
+    """Busca um pedido e todos seus produtos vinculados
 
-    Retorno sem conteudo.
+    Retorna o pedido e seus produtos vinculados.
     """
-    session = Session()
+    try:
+        session = Session()
 
-    order_products = session.query(OrderProduct)\
-        .filter(
-            OrderProduct.order_id == path.order_id,
-            OrderProduct.deleted_at.is_(None)
-        ).all()
+        order_products = session.query(OrderProduct)\
+            .filter(
+                OrderProduct.order_id == path.order_id,
+                OrderProduct.deleted_at.is_(None)
+            ).all()
+        
+        if not order_products:
+            error_message = "Vinculo não encontrado na base de dados"
+            return { "message": error_message }, 404
 
-    # ISSO TO USANDO PRA PRINTAR POQUE A CLASSE NÃO POSSUI UM METODO __repr__ OU __str__ NA MODEL
-    # VERIFICAR POQUE QUANDO USO O METODO DE PRESENTATION DA CERTO
+        return order_product_by_order_presentation(order_products), 200
 
-    return order_product_by_order_presentation(order_products), 200
+    except Exception as e:
+        error_message = "Não foi possível buscar os pedidos do produto," \
+        " por favor tente novamente mais tarde"
+
+        return { "message": error_message}, 400
