@@ -97,9 +97,9 @@ def order_product_by_order_presentation(order_products: list[OrderProduct]):
         "table_number": order_products[0].order.table_number,
         "observation": order_products[0].order.observation,
         "status": order_products[0].order.status,
-        "status": order_products[0].order.created_at,
-        "status": order_products[0].order.updated_at,
-        "status": order_products[0].order.deleted_at,
+        "created_at": order_products[0].order.created_at,
+        "updated_at": order_products[0].order.updated_at,
+        "deleted_at": order_products[0].order.deleted_at,
         "products": [
             {
                 "product_id": op.product.id,
